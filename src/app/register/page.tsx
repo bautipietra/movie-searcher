@@ -1,8 +1,42 @@
-import AuthLayout from '@/components/AuthLayout'
-import Image from 'next/image'
-import Link from 'next/link'
+'use client'
 
-const page = () => {
+import AuthLayout from '@/components/AuthLayout'
+import pb from '@/db/db'
+import Link from 'next/link'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+
+const Page = () => {
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  })
+
+  const register = async (e: any) => {
+    e.preventDefault()
+    const record = await pb.collection('users').create({
+      email: form.email,
+      password: form.password,
+      passwordConfirm: form.password
+    })
+    await pb
+      .collection('users')
+      .requestVerification(record.items[0].email)
+    toast.success('Account created', {
+      id: 'accountCreated'
+    })
+  }
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const googleAuth = async () => {
+    const authData = await pb
+      .collection('users')
+      .authWithOAuth2({ provider: 'google' })
+  }
+
   return (
     <AuthLayout>
       <div className='w-full  flex flex-col items-center justify-center px-4'>
@@ -19,6 +53,8 @@ const page = () => {
               <label className='font-medium'>Email</label>
               <input
                 type='email'
+                name='email'
+                onChange={handleChange}
                 required
                 className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-600 shadow-sm rounded-lg'
               />
@@ -27,21 +63,27 @@ const page = () => {
               <label className='font-medium'>Password</label>
               <input
                 type='password'
+                name='password'
+                onChange={handleChange}
                 required
                 className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-600 shadow-sm rounded-lg'
               />
             </div>
-            <button className='w-full px-4 py-2 text-white font-medium bg-blue-600 hover:bg-blue-500 active:bg-blue-600 rounded-lg duration-150'>
-              Sign in
+            <button
+              onClick={register}
+              className='w-full px-4 py-2 text-white font-medium bg-blue-600 hover:bg-blue-500 active:bg-blue-600 rounded-lg duration-150'>
+              Sign Up
             </button>
           </form>
-          <button className='w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100'>
+          <button
+            onClick={googleAuth}
+            className='w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100'>
             <svg
               className='w-5 h-5'
               viewBox='0 0 48 48'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'>
-              <g clip-path='url(#clip0_17_40)'>
+              <g clipPath='url(#clip0_17_40)'>
                 <path
                   d='M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z'
                   fill='#4285F4'
@@ -81,4 +123,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

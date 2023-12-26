@@ -7,16 +7,15 @@ import { toast } from 'react-hot-toast'
 
 const Page = () => {
   useEffect(() => {
-    if (pb.authStore.isValid) {
-      toast.success('Logged out', {
-        id: 'loggedOut'
+    if (!pb.authStore.isValid) {
+      toast.error('You must be logged in to view this page', {
+        id: 'loginRequired'
       })
-      pb.authStore.clear()
-      redirect('/login')
-    } else {
       redirect('/login')
     }
   }, [])
+
+  return <>{pb.authStore.isValid && <div>page</div>}</>
 }
 
 export default Page

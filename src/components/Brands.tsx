@@ -105,9 +105,9 @@ export const Brands = () => {
                     r='1'
                     gradientUnits='userSpaceOnUse'
                     gradientTransform='translate(45 85) rotate(-90) scale(80 99.3259)'>
-                    <stop offset='0.0655875' stop-color='#0367DE' />
-                    <stop offset='0.347104' stop-color='#0057BE' />
-                    <stop offset='0.769378' stop-color='#000940' />
+                    <stop offset='0.0655875' stopColor='#0367DE' />
+                    <stop offset='0.347104' stopColor='#0057BE' />
+                    <stop offset='0.769378' stopColor='#000940' />
                   </radialGradient>
                   <radialGradient
                     id='paint1_radial_806_7938'
@@ -116,19 +116,19 @@ export const Brands = () => {
                     r='1'
                     gradientUnits='userSpaceOnUse'
                     gradientTransform='translate(70.0896 44.5993) scale(45.6799 45.6799)'>
-                    <stop stop-color='white' />
-                    <stop offset='0.01' stop-color='white' />
-                    <stop offset='0.03' stop-color='#CBFFFF' />
-                    <stop offset='0.06' stop-color='#96FFFF' />
-                    <stop offset='0.08' stop-color='#68FFFF' />
-                    <stop offset='0.11' stop-color='#43FFFF' />
-                    <stop offset='0.14' stop-color='#25FFFF' />
-                    <stop offset='0.16' stop-color='#11FFFF' />
-                    <stop offset='0.19' stop-color='#04FFFF' />
-                    <stop offset='0.22' stop-color='#00FFFF' />
+                    <stop stopColor='white' />
+                    <stop offset='0.01' stopColor='white' />
+                    <stop offset='0.03' stopColor='#CBFFFF' />
+                    <stop offset='0.06' stopColor='#96FFFF' />
+                    <stop offset='0.08' stopColor='#68FFFF' />
+                    <stop offset='0.11' stopColor='#43FFFF' />
+                    <stop offset='0.14' stopColor='#25FFFF' />
+                    <stop offset='0.16' stopColor='#11FFFF' />
+                    <stop offset='0.19' stopColor='#04FFFF' />
+                    <stop offset='0.22' stopColor='#00FFFF' />
                     <stop
                       offset='1'
-                      stop-color='#0000FF'
+                      stopColor='#0000FF'
                       stop-opacity='0'
                     />
                   </radialGradient>
@@ -301,8 +301,8 @@ export const Brands = () => {
                     x2='29.9922'
                     y2='73.999'
                     gradientUnits='userSpaceOnUse'>
-                    <stop stop-color='#220635' />
-                    <stop offset='1' stop-color='#37086E' />
+                    <stop stopColor='#220635' />
+                    <stop offset='1' stopColor='#37086E' />
                   </linearGradient>
                 </defs>
               </svg>
@@ -421,9 +421,9 @@ export const Brands = () => {
                     x2='123.5'
                     y2='5.00001'
                     gradientUnits='userSpaceOnUse'>
-                    <stop offset='0.139952' stop-color='#271E3D' />
-                    <stop offset='0.463619' stop-color='#540B54' />
-                    <stop offset='0.907317' stop-color='#ED135F' />
+                    <stop offset='0.139952' stopColor='#271E3D' />
+                    <stop offset='0.463619' stopColor='#540B54' />
+                    <stop offset='0.907317' stopColor='#ED135F' />
                   </linearGradient>
                   <linearGradient
                     id='paint1_linear_876_4915'
@@ -432,8 +432,8 @@ export const Brands = () => {
                     x2='63.7479'
                     y2='29.0909'
                     gradientUnits='userSpaceOnUse'>
-                    <stop offset='0.28' stop-color='#FA1660' />
-                    <stop offset='0.78' stop-color='#FF7D17' />
+                    <stop offset='0.28' stopColor='#FA1660' />
+                    <stop offset='0.78' stopColor='#FF7D17' />
                   </linearGradient>
                 </defs>
               </svg>
@@ -467,8 +467,8 @@ export const Brands = () => {
                     x2='82.5'
                     y2='7'
                     gradientUnits='userSpaceOnUse'>
-                    <stop stop-color='#04080B' />
-                    <stop offset='1' stop-color='#183545' />
+                    <stop stopColor='#04080B' />
+                    <stop offset='1' stopColor='#183545' />
                   </linearGradient>
                 </defs>
               </svg>
