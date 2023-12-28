@@ -3,28 +3,46 @@
 import AuthLayout from '@/components/AuthLayout'
 import pb from '@/db/db'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useAuth } from '@/context/AuthContext'
+import { useRouter } from 'next/navigation'
 
 const Page = () => {
+  const { isLoggedIn, AuthRefresh } = useAuth()
+  const router = useRouter()
+
   const [form, setForm] = useState({
     email: '',
     password: ''
   })
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/')
+    }
+  }, [])
+
   const register = async (e: any) => {
     e.preventDefault()
+    console.log(form)
+
     const record = await pb.collection('users').create({
       email: form.email,
       password: form.password,
       passwordConfirm: form.password
     })
-    await pb
-      .collection('users')
-      .requestVerification(record.items[0].email)
+    await pb.collection('users').requestVerification(form.email)
     toast.success('Account created', {
       id: 'accountCreated'
     })
+    const authData = await pb
+      .collection('users')
+      .authWithPassword(form.email, form.password)
+    if (pb.authStore.isValid) {
+      AuthRefresh()
+      router.push('/')
+    }
   }
 
   const handleChange = (e: any) => {

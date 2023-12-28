@@ -1,21 +1,28 @@
 'use client'
 
 import pb from '@/db/db'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
+import { useAuth } from '@/context/AuthContext'
 
 const Page = () => {
+  const router = useRouter()
+  const { isLoggedIn, AuthRefresh } = useAuth()
+
+  const logout = async () => {
+    await pb.authStore.clear()
+    AuthRefresh()
+  }
+
   useEffect(() => {
-    if (pb.authStore.isValid) {
+    if (isLoggedIn) {
+      logout()
       toast.success('Logged out', {
         id: 'loggedOut'
       })
-      pb.authStore.clear()
-      redirect('/login')
-    } else {
-      redirect('/login')
     }
+    router.push('/login')
   }, [])
 }
 

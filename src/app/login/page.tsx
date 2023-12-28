@@ -1,8 +1,62 @@
-import AuthLayout from '@/components/AuthLayout'
-import Image from 'next/image'
-import Link from 'next/link'
+'use client'
 
-const page = () => {
+import AuthLayout from '@/components/AuthLayout'
+import pb from '@/db/db'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useAuth } from '@/context/AuthContext'
+
+const Page = () => {
+  const router = useRouter()
+  const { isLoggedIn, AuthRefresh } = useAuth()
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/')
+    }
+  }, [])
+
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  })
+
+  const login = async (e: any) => {
+    e.preventDefault()
+
+    try {
+      await pb
+        .collection('users')
+        .authWithPassword(form.email, form.password)
+      if (pb.authStore.isValid) {
+        AuthRefresh()
+        toast.success('Logged in', {
+          id: 'logged'
+        })
+        router.push('/')
+      }
+    } catch (error) {
+      toast.error('Wrong email or password', {
+        id: 'wrong'
+      })
+    }
+  }
+
+  const googleAuth = async () => {
+    const authData = await pb
+      .collection('users')
+      .authWithOAuth2({ provider: 'google' })
+    if (pb.authStore.isValid) {
+      AuthRefresh()
+      toast.success('Logged in', {
+        id: 'logged'
+      })
+      router.push('/')
+    }
+  }
+
   return (
     <AuthLayout>
       <div className='w-full flex flex-col items-center justify-center px-4'>
@@ -19,6 +73,9 @@ const page = () => {
               <label className='font-medium'>Email</label>
               <input
                 type='email'
+                onChange={(e) =>
+                  setForm({ ...form, email: e.target.value })
+                }
                 required
                 className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-600 shadow-sm rounded-lg'
               />
@@ -27,6 +84,9 @@ const page = () => {
               <label className='font-medium'>Password</label>
               <input
                 type='password'
+                onChange={(e) =>
+                  setForm({ ...form, password: e.target.value })
+                }
                 required
                 className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-600 shadow-sm rounded-lg'
               />
@@ -49,11 +109,15 @@ const page = () => {
                 Forgot password?
               </a>
             </div>
-            <button className='w-full px-4 py-2 text-white font-medium bg-blue-600 hover:bg-blue-500 active:bg-blue-600 rounded-lg duration-150'>
+            <button
+              onClick={login}
+              className='w-full px-4 py-2 text-white font-medium bg-blue-600 hover:bg-blue-500 active:bg-blue-600 rounded-lg duration-150'>
               Sign in
             </button>
           </form>
-          <button className='w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100'>
+          <button
+            onClick={googleAuth}
+            className='w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100'>
             <svg
               className='w-5 h-5'
               viewBox='0 0 48 48'
@@ -99,4 +163,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

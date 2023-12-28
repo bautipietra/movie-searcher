@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Nav } from '@/components/Nav'
+import dynamic from 'next/dynamic'
+const Nav = dynamic(() => import('@/components/Nav'), {
+  ssr: false
+})
 import { Banner } from '@/components/Banner'
 import { Footer } from '@/components/Footer'
 import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from '../context/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <Toaster position='bottom-center'></Toaster>
-        <Banner></Banner>
-        <Nav></Nav>
-        {children}
-        <Footer></Footer>
+        <AuthProvider>
+          <Toaster position='bottom-center'></Toaster>
+          <Banner></Banner>
+          <Nav></Nav>
+          {children}
+          <Footer></Footer>
+        </AuthProvider>
       </body>
     </html>
   )

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 import pb from '../db/db'
+import { useAuth } from '@/context/AuthContext'
 
 // Profile Dropdown
 const ProfileDropDown = (props: any) => {
@@ -25,8 +26,11 @@ const ProfileDropDown = (props: any) => {
           ref={profileRef}
           className='w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-blue-600'
           onClick={() => setState(!state)}>
-          <img
-            src='https://randomuser.me/api/portraits/men/46.jpg'
+          <Image
+            alt='user'
+            width={40}
+            height={40}
+            src='/user.png'
             className='w-full h-full rounded-full'
           />
         </button>
@@ -56,7 +60,8 @@ const ProfileDropDown = (props: any) => {
   )
 }
 
-export const Nav = () => {
+const Nav = () => {
+  const { isLoggedIn } = useAuth()
   const [menuState, setMenuState] = useState(false)
 
   // Replace javascript:void(0) path with your path
@@ -65,8 +70,6 @@ export const Nav = () => {
     { title: 'Movies', path: '/movies' },
     { title: 'Favorites', path: '/favorites' }
   ]
-
-  const isLoggedIn = pb.authStore.isValid
 
   return (
     <nav className='bg-white border-b'>
@@ -186,3 +189,5 @@ export const Nav = () => {
     </nav>
   )
 }
+
+export default Nav
